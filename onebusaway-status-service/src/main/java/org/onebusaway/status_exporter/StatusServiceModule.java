@@ -15,14 +15,8 @@
  */
 package org.onebusaway.status_exporter;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.servlet.Servlet;
-
-import org.onebusaway.guice.jetty_exporter.JettyExporterModule;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
@@ -33,13 +27,10 @@ import com.google.inject.spi.InjectionListener;
 import com.google.inject.spi.TypeEncounter;
 import com.google.inject.spi.TypeListener;
 
-public class StatusExporterModule extends AbstractModule {
-
-  public static final String NAME_EXECUTOR = "org.onebusaway.status_exporter.GtfsRealtimeExporterModule.executor";
+public class StatusServiceModule extends AbstractModule {
 
   public static void addModuleAndDependencies(Set<Module> modules) {
-    modules.add(new StatusExporterModule());
-    JettyExporterModule.addModuleAndDependencies(modules);
+    modules.add(new StatusServiceModule());
   }
 
   @Override
@@ -66,19 +57,6 @@ public class StatusExporterModule extends AbstractModule {
         }
       }
     });
-
-    bind(StatusServletSource.class);
-
-    try {
-      bind(URL.class).annotatedWith(Names.named(StatusServletSource.URL_NAME)).toInstance(
-          new URL("http://localhost/status"));
-    } catch (MalformedURLException e) {
-      throw new IllegalStateException(e);
-    }
-
-    bind(Servlet.class).annotatedWith(
-        Names.named(StatusServletSource.SERVLET_NAME)).to(StatusServlet.class);
-
   }
 
   /**

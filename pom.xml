@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>onebusaway</artifactId>
@@ -9,7 +10,8 @@
   <version>1.0.0-SNAPSHOT</version>
   <name>onebusaway-status-exporter</name>
   <description>Simple interface for exporting a status page for daemon processes.</description>
-  
+  <packaging>pom</packaging>
+
   <repositories>
     <repository>
       <id>public.onebusaway.org</id>
@@ -36,12 +38,16 @@
     </site>
   </distributionManagement>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.google.inject</groupId>
+        <artifactId>guice</artifactId>
+        <version>3.0</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
-    <dependency>
-      <groupId>org.onebusaway</groupId>
-      <artifactId>onebusaway-guice-jetty-exporter</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
-    </dependency>
 
     <dependency>
       <groupId>junit</groupId>
@@ -56,4 +62,8 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <modules>
+    <module>onebusaway-status-service</module>
+    <module>onebusaway-status-jetty-exporter</module>
+  </modules>
 </project>
